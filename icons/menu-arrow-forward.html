@@ -1,0 +1,214 @@
+<!--
+@license
+MIT License
+
+Copyright (c) 2017 Andrew Mitchell
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+<link rel="import" href="../../iron-iconset-svg/iron-iconset-svg.html">
+<link rel="import" href="../delightful-icons-style.html">
+
+<iron-iconset-svg name="delightful-menu-arrow-forward" size="24">
+  <svg>
+    <defs>
+      <g id="arrow-forward" class="mafaf">
+        <style type="text/css">
+          @keyframes mafaf-w {
+            from {
+              transform: rotate(0deg);
+              visibility: visible;
+            }
+            to {
+              transform: rotate(180deg);
+              visibility: hidden;
+            }
+          }
+
+          @keyframes mafaf-a {
+            from {
+              transform: translate(0px, -5px) scale(9, 2);
+            }
+            to {
+              transform: translate(-3.3px, -3.3px) rotate(-45deg) scale(5.75, 2);
+            }
+          }
+
+          @keyframes mafaf-b {
+            from {
+              transform: scale(9, 2);
+            }
+            to {
+              transform: translate(0.25px, 0px) scale(7.5, 2);
+            }
+          }
+
+          @keyframes mafaf-c {
+            from {
+              transform: translate(0px, 5px) scale(9, 2);
+            }
+            to {
+              transform: translate(-3.3px, 3.3px) rotate(45deg) scale(5.75, 2);
+            }
+          }
+
+          @keyframes mafaf-v {
+            from {
+              visibility: hidden;
+            }
+            to {
+              visibility: visible;
+            }
+          }
+
+          .mafaf .w,
+          .mafaf .a,
+          .mafaf .b,
+          .mafaf .c {
+            animation-duration: var(--delightful-icons-duration);
+            animation-fill-mode: forwards;
+            animation-timing-function: var(--delightful-icons-easing);
+          }
+
+          .mafaf .w {
+            animation-name: mafaf-w;
+          }
+
+          .mafaf .a {
+            animation-name: mafaf-a;
+          }
+
+          .mafaf .b {
+            animation-name: mafaf-b;
+          }
+
+          .mafaf .c {
+            animation-name: mafaf-c;
+          }
+
+          .mafaf path {
+            animation-name: mafaf-v;
+            animation-delay: var(--delightful-icons-duration);
+            animation-fill-mode: forwards;
+            visibility: hidden;
+          }
+        </style>
+        <g transform="translate(12, 12)" stroke="currentcolor">
+          <g class="w">
+            <line class="a" x1="-1" y1="0" x2="1" y2="0"></line>
+            <line class="b" x1="-1" y1="0" x2="1" y2="0"></line>
+            <line class="c" x1="-1" y1="0" x2="1" y2="0"></line>
+          </g>
+        </g>
+        <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"></path>
+      </g>
+
+      <g id="menu" class="mafm">
+        <style type="text/css">
+          @keyframes mafm-w {
+            from {
+              transform: rotate(0deg);
+              visibility: visible;
+            }
+            to {
+              transform: rotate(180deg);
+              visibility: hidden;
+            }
+          }
+
+          @keyframes mafm-a {
+            from {
+              transform: translate(3.3px, -3.3px) rotate(45deg) scale(5.75, 2);
+            }
+            to {
+              transform: translate(0px, -5px) scale(9, 2);
+            }
+          }
+
+          @keyframes mafm-b {
+            from {
+              transform: translate(0.25px, 0px) scale(7.5, 2);
+            }
+            to {
+              transform: scale(9, 2);
+            }
+          }
+
+          @keyframes mafm-c {
+            from {
+              transform: translate(3.3px, 3.3px) rotate(-45deg) scale(5.75, 2);
+            }
+            to {
+              transform: translate(0px, 5px) scale(9, 2);
+            }
+          }
+
+          @keyframes mafm-v {
+            from {
+              visibility: hidden;
+            }
+            to {
+              visibility: visible;
+            }
+          }
+
+          .mafm .w,
+          .mafm .a,
+          .mafm .b,
+          .mafm .c {
+            animation-duration: var(--delightful-icons-duration);
+            animation-fill-mode: forwards;
+            animation-timing-function: var(--delightful-icons-easing);
+          }
+
+          .mafm .w {
+            animation-name: mafm-w;
+          }
+
+          .mafm .a {
+            animation-name: mafm-a;
+          }
+
+          .mafm .b {
+            animation-name: mafm-b;
+          }
+
+          .mafm .c {
+            animation-name: mafm-c;
+          }
+
+          .mafm path {
+            animation-name: mafm-v;
+            animation-delay: var(--delightful-icons-duration);
+            animation-fill-mode: forwards;
+            visibility: hidden;
+          }
+        </style>
+        <g transform="translate(12, 12)" stroke="currentcolor">
+          <g class="w">
+            <line class="a" x1="-1" y1="0" x2="1" y2="0"></line>
+            <line class="b" x1="-1" y1="0" x2="1" y2="0"></line>
+            <line class="c" x1="-1" y1="0" x2="1" y2="0"></line>
+          </g>
+        </g>
+        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+      </g>
+    </defs>
+  </svg>
+</iron-iconset-svg>

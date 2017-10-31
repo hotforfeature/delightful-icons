@@ -1,0 +1,30 @@
+{
+  "name": "delightful-icons",
+  "version": "0.1.0",
+  "description": "Icons that implement Material Design&#39;s delightful details.",
+  "authors": [
+    "Andrew Mitchell <abmitchell77@gmail.com>"
+  ],
+  "keywords": [
+    "polymer",
+    "icon",
+    "material"
+  ],
+  "main": "all.html",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hotforfeature/delightful-icons"
+  },
+  "license": "https://github.com/hotforfeature/delightful-icons/blob/master/LICENSE.txt",
+  "homepage": "https://github.com/hotforfeature/delightful-icons",
+  "dependencies": {
+    "iron-iconset-svg": "PolymerElements/iron-iconset-svg#1 - 2",
+    "polymer": "Polymer/polymer#1.9 - 2"
+  },
+  "devDependencies": {
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
+    "paper-icon-button": "PolymerElements/paper-icon-button#^2.0.1",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
+    "web-component-tester": "Polymer/web-component-tester#^6.0.0"
+  }
+}
