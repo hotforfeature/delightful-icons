@@ -1,6 +1,6 @@
 {
   "name": "delightful-icons",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Icons that implement Material Design's delightful details.",
   "author": "Andrew Mitchell <abmitchell77@gmail.com>",
   "keywords": [
@@ -21,7 +21,7 @@
   "scripts": {
     "commitmsg": "validate-commit-msg",
     "commit": "git-cz",
-    "release": ""
+    "release": "standard-version"
   },
   "devDependencies": {
     "commitizen": "^2.9.6",
