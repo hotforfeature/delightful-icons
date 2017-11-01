@@ -117,7 +117,12 @@ https://material.io/icons/ -->
             animation-name: fsf-v;
             animation-delay: var(--delightful-icons-duration);
             animation-fill-mode: forwards;
-            visibility: hidden;
+            /* Safari 9 fix */
+            /* ShadyCSS can't properly evaluate SVG styles since they aren't part of a component and
+            they're manually cloned by iron-iconset-svg. If we wrap this in <custom-style> the
+            custom properties will work, but they won't be scoped correctly. This hack forces
+            Safari 9 to show the default icon since it won't evaluate the following line */
+            visibility: var(--hidden, hidden);
           }
         </style>
         <g transform="translate(12, 12)" stroke="currentcolor">
@@ -201,7 +206,7 @@ https://material.io/icons/ -->
             animation-name: fss-v;
             animation-delay: var(--delightful-icons-duration);
             animation-fill-mode: forwards;
-            visibility: hidden;
+            visibility: var(--hidden, hidden);
           }
         </style>
         <g transform="translate(12, 12)" stroke="currentcolor">
