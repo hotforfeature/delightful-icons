@@ -1,3 +1,6 @@
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/hotforfeature/delightful-icons)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+
 ## &lt;delightful-icons&gt;
 
 Material Design: [Creative Customization](https://material.io/guidelines/motion/creative-customization.html#creative-customization-icons)
@@ -26,18 +29,31 @@ Icon sets are defined by a pair of icons that transition between each other. The
 
 To transition to another icon, change the icon name to the other value in the pair.
 
+<!---
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../paper-icon-button/paper-icon-button.html">
+    <link rel="import" href="icons/menu-arrow-back.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
 ```html
-<!-- An icon that shows a menu icon by default -->
-<iron-icon icon="delightful-menu-arrow-back:menu">
+<paper-icon-button icon="delightful-menu-arrow-back:menu"></paper-icon-button>
 
 <script>
-  const iron = document.querySelector('iron-icon');
-  iron.addEventListener('click', () => {
-    if (iron.icon.includes(':menu')) {
-      iron.icon = iron.icon.replace(':menu', ':arrow-back');
-    } else {
-      iron.icon = iron.icon.replace(':arrow-back', ':menu');
-    }
+  window.addEventListener('WebComponentsReady', function() {
+    var button = document.querySelector('paper-icon-button');
+    button.addEventListener('click', function() {
+      if (button.icon.indexOf(':menu') > -1) {
+        button.icon = button.icon.replace(':menu', ':arrow-back');
+      } else {
+        button.icon = button.icon.replace(':arrow-back', ':menu');
+      }
+    });
   });
 </script>
 ```

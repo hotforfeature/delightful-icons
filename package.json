@@ -1,0 +1,38 @@
+{
+  "name": "delightful-icons",
+  "version": "0.1.0",
+  "description": "Icons that implement Material Design's delightful details.",
+  "author": "Andrew Mitchell <abmitchell77@gmail.com>",
+  "keywords": [
+    "polymer",
+    "icon",
+    "material"
+  ],
+  "main": "all.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hotforfeature/delightful-icons.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hotforfeature/delightful-icons/issues"
+  },
+  "homepage": "https://github.com/hotforfeature/delightful-icons#readme",
+  "scripts": {
+    "commitmsg": "validate-commit-msg",
+    "commit": "git-cz",
+    "release": ""
+  },
+  "devDependencies": {
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.1.0",
+    "husky": "^0.14.3",
+    "standard-version": "^4.2.0",
+    "validate-commit-msg": "^2.14.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
