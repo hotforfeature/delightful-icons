@@ -17,6 +17,9 @@
   },
   "license": "https://github.com/hotforfeature/delightful-icons/blob/master/LICENSE.txt",
   "homepage": "https://github.com/hotforfeature/delightful-icons",
+  "demos": {
+    "Icons": "demo/index.html"
+  },
   "dependencies": {
     "iron-iconset-svg": "PolymerElements/iron-iconset-svg#1 - 2",
     "polymer": "Polymer/polymer#1.9 - 2"
