@@ -77,8 +77,11 @@ Custom Property               | Description         | Default
 `--delightful-icons-duration` | Transition duration | `0.2s`
 `--delightful-icons-easing`   | Transition easing   | `cubic-bezier(0.4, 0, 0.2, 1)`
 
-### Browser Compatibility
+### Compatibility
 
-IE11 does not support CSS transforms on SVG elements. [Microsoft Edge is considering CSS transforms for SVG](https://developer.microsoft.com/en-us/microsoft-edge/platform/status/supportcsstransformsonsvg/).
+On browsers that do not support CSS transforms, the icon will immediately change from one to another without a transition .
 
-On browsers that do not support CSS transforms, the icon will immediately change from one to another without a transition by setting `--delightful-icons-duration` to `0s`.
+- **IE 11** does not support CSS transforms on SVG elements.
+- [**Microsoft Edge** is considering CSS transforms for SVG](https://developer.microsoft.com/en-us/microsoft-edge/platform/status/supportcsstransformsonsvg/).
+- **Safari 9** supports CSS transforms, but [due to other maintenance complications](https://github.com/hotforfeature/delightful-icons/issues/3) I have chosen to disable animations for 9. Safari 10+ will show animations correctly.
+
