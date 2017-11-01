@@ -1,6 +1,8 @@
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/hotforfeature/delightful-icons)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
+_[Demo and API docs](https://www.webcomponents.org/element/hotforfeature/delightful-icons)_
+
 ## &lt;delightful-icons&gt;
 
 Material Design: [Creative Customization](https://material.io/guidelines/motion/creative-customization.html#creative-customization-icons)
