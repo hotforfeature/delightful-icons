@@ -52,14 +52,21 @@ SOFTWARE.
         </template>
       </demo-snippet>
 
+      <h3>AV Icons</h3>
+      <demo-snippet>
+        <template>
+          <paper-icon-button icon="delightful-play-arrow-pause:play-arrow"></paper-icon-button>
+        </template>
+      </demo-snippet>
+
       <script>
         var TOGGLE_MAP = {
           'delightful-menu-arrow-back': ['menu', 'arrow-back'],
-          'delightful-menu-arrow-forward': ['menu', 'arrow-forward']
+          'delightful-menu-arrow-forward': ['menu', 'arrow-forward'],
+          'delightful-play-arrow-pause': ['play-arrow', 'pause']
         };
 
         document.addEventListener('WebComponentsReady', function() {
-          console.log('WebComponentsReady');
           var buttons = document.querySelectorAll('paper-icon-button');
           for (let i = 0; i < buttons.length; i++) {
             buttons[i].addEventListener('click', function(e) {

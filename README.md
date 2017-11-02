@@ -38,17 +38,45 @@ To transition to another icon, change the icon name to the other value in the pa
     <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../paper-icon-button/paper-icon-button.html">
     <link rel="import" href="icons/menu-arrow-back.html">
+    <link rel="import" href="icons/play-arrow-pause.html">
     <next-code-block></next-code-block>
+    <paper-icon-button icon="delightful-play-arrow-pause:play-arrow"></paper-icon-button>
+
+    <script>
+      // Other button setup not visible in demo snippet
+      var TOGGLE_MAP = {
+        'delightful-play-arrow-pause': ['play-arrow', 'pause']
+      };
+
+      document.addEventListener('WebComponentsReady', function() {
+        var buttons = document.querySelectorAll('paper-icon-button');
+        for (let i = 0; i < buttons.length; i++) {
+          buttons[i].addEventListener('click', function(e) {
+            var parts = e.target.icon.split(':');
+            var options = TOGGLE_MAP[parts[0]];
+            if (options) {
+              if (parts[1] === options[0]) {
+                parts[1] = options[1];
+              } else {
+                parts[1] = options[0]
+              }
+
+              e.target.icon = parts.join(':');
+            }
+          });
+        }
+      });
+    </script>
   </template>
 </custom-element-demo>
 ```
 -->
 ```html
-<paper-icon-button icon="delightful-menu-arrow-back:menu"></paper-icon-button>
+<paper-icon-button id="button" icon="delightful-menu-arrow-back:menu"></paper-icon-button>
 
 <script>
   window.addEventListener('WebComponentsReady', function() {
-    var button = document.querySelector('paper-icon-button');
+    var button = document.querySelector('#button');
     button.addEventListener('click', function() {
       if (button.icon.indexOf(':menu') > -1) {
         button.icon = button.icon.replace(':menu', ':arrow-back');

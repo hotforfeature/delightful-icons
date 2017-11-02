@@ -1,0 +1,201 @@
+<!--
+@license
+MIT License
+
+Copyright (c) 2017 Andrew Mitchell
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+<link rel="import" href="../../iron-iconset-svg/iron-iconset-svg.html">
+<link rel="import" href="../delightful-icons-style.html">
+
+<iron-iconset-svg name="delightful-play-arrow-pause" size="24">
+  <svg>
+    <defs>
+      <g id="play-arrow" class="pappa">
+        <style type="text/css">
+          @keyframes pappa-w {
+            from {
+              transform: rotate(0);
+              visibility: visible;
+            }
+            to {
+              transform: rotate(90deg);
+              visibility: hidden;
+            }
+          }
+
+          @keyframes pappa-a {
+            from {
+              transform: translate(2px, -7px) scale(4, 14);
+              /* Safari 10, 11 http://caniuse.com/#feat=css-clip-path */
+              -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+              clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+            to {
+              transform: translate(0, -7px) scale(7, 11);
+              -webkit-clip-path: polygon(0 0, 0 0, 100% 100%, 0 100%);
+              clip-path: polygon(0 0, 0 0, 100% 100%, 0 100%);
+            }
+          }
+
+          @keyframes pappa-b {
+            from {
+              transform: translate(-6px, -7px) scale(4, 14);
+              -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+              clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+            to {
+              transform: translate(-7px, -7px) scale(7, 11);
+              -webkit-clip-path: polygon(100% 0, 100% 0, 100% 100%, 0 100%);
+              clip-path: polygon(100% 0, 100% 0, 100% 100%, 0 100%);
+            }
+          }
+
+          @keyframes pappa-v {
+            from {
+              visibility: hidden;
+            }
+            to {
+              visibility: visible;
+            }
+          }
+
+          .pappa .w,
+          .pappa .a,
+          .pappa .b {
+            animation-duration: var(--delightful-icons-duration);
+            animation-fill-mode: forwards;
+            animation-timing-function: var(--delightful-icons-easing);
+          }
+
+          .pappa .w {
+            animation-name: pappa-w;
+          }
+
+          .pappa .a {
+            animation-name: pappa-a;
+          }
+
+          .pappa .b {
+            animation-name: pappa-b;
+          }
+
+          .pappa path {
+            animation-name: pappa-v;
+            animation-delay: var(--delightful-icons-duration);
+            animation-fill-mode: forwards;
+            visibility: hidden;
+          }
+        </style>
+        <g transform="translate(12, 12)" stroke="currentcolor">
+          <g class="w">
+            <rect class="a" x="0" y="0" width="1" height="1" />
+            <rect class="b" x="0" y="0" width="1" height="1" />
+          </g>
+        </g>
+        <path d="M8 5v14l11-7z" />
+      </g>
+
+      <g id="pause" class="papp">
+        <style type="text/css">
+          @keyframes papp-w {
+            from {
+              transform: rotate(90deg);
+              visibility: visible;
+            }
+            to {
+              transform: rotate(180deg);
+              visibility: hidden;
+            }
+          }
+
+          @keyframes papp-a {
+            from {
+              transform: translate(0, -7px) scale(7, 11);
+              -webkit-clip-path: polygon(0 0, 0 0, 100% 100%, 0 100%);
+              clip-path: polygon(0 0, 0 0, 100% 100%, 0 100%);
+            }
+            to {
+              transform: translate(2px, -7px) scale(4, 14);
+              -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+              clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+          }
+
+          @keyframes papp-b {
+            from {
+              transform: translate(-7px, -7px) scale(7, 11);
+              -webkit-clip-path: polygon(100% 0, 100% 0, 100% 100%, 0 100%);
+              clip-path: polygon(100% 0, 100% 0, 100% 100%, 0 100%);
+            }
+            to {
+              transform: translate(-6px, -7px) scale(4, 14);
+              -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+              clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+          }
+
+          @keyframes papp-v {
+            from {
+              visibility: hidden;
+            }
+            to {
+              visibility: visible;
+            }
+          }
+
+          .papp .w,
+          .papp .a,
+          .papp .b {
+            animation-duration: var(--delightful-icons-duration);
+            animation-fill-mode: forwards;
+            animation-timing-function: var(--delightful-icons-easing);
+          }
+
+          .papp .w {
+            animation-name: papp-w;
+          }
+
+          .papp .a {
+            animation-name: papp-a;
+          }
+
+          .papp .b {
+            animation-name: papp-b;
+          }
+
+          .papp path {
+            animation-name: papp-v;
+            animation-delay: var(--delightful-icons-duration);
+            animation-fill-mode: forwards;
+            visibility: hidden;
+          }
+        </style>
+        <g transform="translate(12, 12)" stroke="currentcolor">
+          <g class="w">
+            <rect class="a" x="0" y="0" width="1" height="1" />
+            <rect class="b" x="0" y="0" width="1" height="1" />
+          </g>
+        </g>
+        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+      </g>
+    </defs>
+  </svg>
+</iron-iconset-svg>
