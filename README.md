@@ -37,14 +37,17 @@ To transition to another icon, change the icon name to the other value in the pa
   <template>
     <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../paper-icon-button/paper-icon-button.html">
+    <link rel="import" href="icons/add-create.html">
     <link rel="import" href="icons/menu-arrow-back.html">
     <link rel="import" href="icons/play-arrow-pause.html">
     <next-code-block></next-code-block>
+
     <paper-icon-button icon="delightful-play-arrow-pause:play-arrow"></paper-icon-button>
+    <paper-icon-button icon="delightful-add-create:add"></paper-icon-button>
 
     <script>
-      // Other button setup not visible in demo snippet
       var TOGGLE_MAP = {
+        'delightful-add-create': ['add', 'create'],
         'delightful-play-arrow-pause': ['play-arrow', 'pause']
       };
 
