@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/hotforfeature/delightful-icons/compare/v0.1.1...v0.2.0) (2017-11-02)
+
+
+### Bug Fixes
+
+* Safari 9 icons not displaying ([bb0e039](https://github.com/hotforfeature/delightful-icons/commit/bb0e039)), closes [#3](https://github.com/hotforfeature/delightful-icons/issues/3)
+
+
+### Features
+
+* add play-arrow/pause pair ([65549a7](https://github.com/hotforfeature/delightful-icons/commit/65549a7)), closes [#1](https://github.com/hotforfeature/delightful-icons/issues/1)
+
+
+
 <a name="0.1.1"></a>
 ## [0.1.1](https://github.com/hotforfeature/delightful-icons/compare/v0.1.0...v0.1.1) (2017-11-01)
 
@@ -14,6 +29,3 @@ All notable changes to this project will be documented in this file. See [standa
 ### Features
 
 * **icons:** add menu/arrow-back and arrow-forward pairs ([b62fda8](https://github.com/hotforfeature/delightful-icons/commit/b62fda8))
-
-
-
