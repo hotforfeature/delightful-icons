@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/hotforfeature/delightful-icons#readme",
   "scripts": {
+    "start": "polymer serve",
     "commitmsg": "validate-commit-msg",
     "commit": "git-cz",
     "release": "standard-version"
@@ -27,6 +28,7 @@
     "commitizen": "^2.9.6",
     "cz-conventional-changelog": "^2.1.0",
     "husky": "^0.14.3",
+    "polymer-cli": "^1.5.7",
     "standard-version": "^4.2.0",
     "validate-commit-msg": "^2.14.0"
   },

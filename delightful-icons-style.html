@@ -50,7 +50,17 @@ SOFTWARE.
       width: '2px',
       height: '2px',
     });
-    svg.innerHTML = '<rect width="1" height="1" style="transform: translate(1px, 1px)"/>';
+
+    var rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    rect.setAttribute('x', '0');
+    rect.setAttribute('y', '0');
+    rect.setAttribute('width', '1');
+    rect.setAttribute('height', '1');
+    Object.assign(rect.style, {
+      transform: 'translate(1px, 1px)'
+    });
+
+    svg.appendChild(rect);
     document.body.appendChild(svg);
     var supportsCSSTransform = document.elementFromPoint(1, 1) !== svg;
     svg.parentNode.removeChild(svg);
