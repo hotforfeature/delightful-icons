@@ -1,0 +1,181 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-meta/iron-meta.html">
+
+<dom-module id="delightful-icon">
+  <template>
+    <style>
+      :host([disable-transition]) {
+        --delightful-icons-duration: 0s;
+      }
+    </style>
+    <slot></slot>
+  </template>
+
+  <script>
+    /**
+     * `delightful-icon`
+     * Transition between icons using Material Design&#39;s delightful details.
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class DelightfulIcon extends Polymer.Element {
+      static get is() { return 'delightful-icon'; }
+      static get properties() {
+        return {
+          icon: {
+            type: String,
+            notify: true,
+            reflectToAttribute: true,
+            observer: 'iconChanged'
+          },
+          next: {
+            type: String,
+            notify: true,
+            reflectToAttribute: true,
+            observer: 'nextChanged'
+          },
+          query: {
+            type: String,
+            value: '*'
+          },
+          property: {
+            type: String,
+            value: 'icon'
+          },
+          disableTransition: {
+            type: Boolean,
+            value: false,
+            reflectToAttribute: true
+          },
+          disableNextTransition: {
+            type: Boolean,
+            value: true
+          },
+          iconElement: {
+            type: Object,
+            computed: 'getIconElement(query)'
+          },
+          _meta: {
+            type: Object,
+            value: () => {
+              return new Polymer.IronMeta({ type: 'iconset' });
+            }
+          },
+          _icons: {
+            type: Array,
+            value: () => {
+              return [];
+            }
+          },
+          _iconNames: {
+            type: Array,
+            value: () => {
+              return [];
+            }
+          }
+        };
+      }
+
+      toggle() {
+        this.icon = this.next;
+      }
+
+      getIconElement() {
+        return this.querySelector(this.query || '*');
+      }
+
+      iconChanged(icon, previous) {
+        let fullIcon = this._icons[this._iconNames.indexOf(icon)];
+        if (!fullIcon) {
+          if (!this.updatePairFor(icon, previous || this.next)) {
+            this.disableNextTransition = true;
+            this.updatePairFor(icon);
+          }
+
+          if (this._iconNames.indexOf(icon) > -1) {
+            this.iconChanged(icon, previous);
+          }
+        } else if (this.iconElement && this.iconElement[this.property] !== fullIcon) {
+          let duration;
+          if (this.disableNextTransition) {
+            duration = this.iconElement.getComputedStyleValue('--delightful-icons-duration');
+            this.disableTransition = true;
+          }
+
+          this.iconElement[this.property] = fullIcon;
+          this.next = icon === this._iconNames[0] ? this._iconNames[1] : this._iconNames[0];
+          if (this.disableNextTransition) {
+            setTimeout(() => {
+              this.disableTransition = false;
+              this.disableNextTransition = false;
+            }, this.durationToMs(duration));
+          }
+        }
+      }
+
+      nextChanged(next, previous) {
+        if (next === this.icon) {
+          this.icon = previous;
+        }
+      }
+
+      durationToMs(duration) {
+        let value = parseFloat(duration);
+        if (typeof duration === 'string' && duration.indexOf('ms') === -1) {
+          value *= 1000;
+        }
+
+        if (isNaN(value)) {
+          value = 0;
+        }
+
+        return value;
+      }
+
+      updatePairFor(newIcon, previousIcon) {
+        let iconset;
+        if (newIcon && newIcon.indexOf(':') > -1) {
+          iconset = newIcon.split(':')[0];
+        }
+
+        if (!iconset) {
+          newIcon = this.getIconName(newIcon);
+          previousIcon = this.getIconName(previousIcon);
+          iconset = Object.keys(Polymer.IronMeta.types.iconset || {}).find(key => {
+            if (previousIcon) {
+              return key === `delightful-${newIcon}-${previousIcon}` ||
+                key === `delightful-${previousIcon}-${newIcon}`;
+            } else {
+              return key.indexOf('delightful') === 0 && key.indexOf(newIcon) > -1;
+            }
+          });
+
+          if (!iconset) {
+            if (previousIcon) {
+              console.warn(`Missing icon pair for "${previousIcon}" and "${newIcon}"`);
+            } else {
+              console.warn(`Missing icon pair for "${newIcon}"`);
+            }
+          }
+        }
+
+        this._meta.key = iconset;
+        this._icons = this._meta.value && this._meta.value.getIconNames() || [];
+        this._iconNames = this._icons.map(fullIcon => this.getIconName(fullIcon));
+        return !!this._meta.value;
+      }
+
+      getIconName(icon) {
+        if (icon && icon.indexOf(':') > -1) {
+          return icon.split(':')[1];
+        } else {
+          return icon;
+        }
+      }
+    }
+
+    window.customElements.define(DelightfulIcon.is, DelightfulIcon);
+  </script>
+</dom-module>
