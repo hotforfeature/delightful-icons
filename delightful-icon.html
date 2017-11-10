@@ -144,14 +144,24 @@
         if (!iconset) {
           newIcon = this.getIconName(newIcon);
           previousIcon = this.getIconName(previousIcon);
-          iconset = Object.keys(Polymer.IronMeta.types.iconset || {}).find(key => {
-            if (previousIcon) {
-              return key === `delightful-${newIcon}-${previousIcon}` ||
-                key === `delightful-${previousIcon}-${newIcon}`;
-            } else {
-              return key.indexOf('delightful') === 0 && key.indexOf(newIcon) > -1;
-            }
-          });
+          if (previousIcon) {
+            Object.keys(Polymer.IronMeta.types.iconset || {}).some(key => {
+              if (previousIcon && (key === `delightful-${newIcon}-${previousIcon}` ||
+                  key === `delightful-${previousIcon}-${newIcon}`)) {
+                iconset = key;
+                return true;
+              }
+            });
+          }
+
+          if (!iconset) {
+            Object.keys(Polymer.IronMeta.types.iconset || {}).some(key => {
+              if (key.indexOf('delightful') === 0 && key.indexOf(newIcon) > -1) {
+                iconset = key;
+                return true;
+              }
+            });
+          }
 
           if (!iconset) {
             if (previousIcon) {
