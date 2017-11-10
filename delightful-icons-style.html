@@ -68,7 +68,8 @@ SOFTWARE.
     if (!supportsCSSTransform) {
       var customStyle = document.createElement('custom-style');
       var style = document.createElement('style');
-      style.innerHTML = 'html { --delightful-icons-duration: 0s !important }';
+      // Safari disables animations at 0s, so we set them to 1ms
+      style.innerHTML = 'html { --delightful-icons-duration: 1ms !important }';
       customStyle.appendChild(style);
       document.head.appendChild(customStyle);
     }

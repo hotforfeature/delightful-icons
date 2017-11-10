@@ -5,7 +5,7 @@
   <template>
     <style>
       :host([disable-transition]) {
-        --delightful-icons-duration: 0s;
+        --delightful-icons-duration: 1ms; /* Safari disables animations at 0s */
       }
     </style>
     <slot></slot>
