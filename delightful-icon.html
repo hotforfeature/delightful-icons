@@ -101,6 +101,7 @@
           let duration;
           if (this.disableNextTransition) {
             duration = this.iconElement.getComputedStyleValue('--delightful-icons-duration');
+            this._previousDisableTransition = this.disableTransition;
             this.disableTransition = true;
           }
 
@@ -108,7 +109,7 @@
           this.next = icon === this._iconNames[0] ? this._iconNames[1] : this._iconNames[0];
           if (this.disableNextTransition) {
             setTimeout(() => {
-              this.disableTransition = false;
+              this.disableTransition = this._previousDisableTransition;
               this.disableNextTransition = false;
             }, this.durationToMs(duration));
           }
