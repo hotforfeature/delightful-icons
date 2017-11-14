@@ -36,6 +36,10 @@
             reflectToAttribute: true,
             observer: 'nextChanged'
           },
+          toggleOn: {
+            type: String,
+            observer: 'toggleOnChanged'
+          },
           query: {
             type: String,
             value: '*'
@@ -55,7 +59,8 @@
           },
           iconElement: {
             type: Object,
-            computed: 'getIconElement(query)'
+            computed: 'getIconElement(query)',
+            observer: 'iconElementChanged'
           },
           _meta: {
             type: Object,
@@ -76,6 +81,11 @@
             }
           }
         };
+      }
+
+      constructor() {
+        super();
+        this._toggleOnListener = this.toggle.bind(this);
       }
 
       toggle() {
@@ -119,6 +129,23 @@
       nextChanged(next, previous) {
         if (next === this.icon) {
           this.icon = previous;
+        }
+      }
+
+      toggleOnChanged(toggleOn, previous) {
+        if (previous && this.iconElement) {
+          this.iconElement.removeEventListener(previous, this._toggleOnListener);
+        }
+
+        if (toggleOn && this.iconElement) {
+          this.iconElement.addEventListener(toggleOn, this._toggleOnListener);
+        }
+      }
+
+      iconElementChanged(element, previous) {
+        if (previous && this.toggleOn) {
+          previous.removeEventListener(this.toggleOn, this._toggleOnListener);
+          this.toggleOnChanged(this.toggleOn);
         }
       }
 

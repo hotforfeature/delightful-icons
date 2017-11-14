@@ -24,13 +24,13 @@
       <h3>Navigation</h3>
       <demo-snippet>
         <template>
-          <delightful-icon icon="menu" next="arrow-back">
+          <delightful-icon icon="menu" next="arrow-back" toggle-on="click">
             <paper-icon-button></paper-icon-button>
           </delightful-icon>
-          <delightful-icon icon="menu" next="arrow-forward">
+          <delightful-icon icon="menu" next="arrow-forward" toggle-on="click">
             <paper-icon-button></paper-icon-button>
           </delightful-icon>
-          <delightful-icon icon="arrow-back" next="arrow-forward">
+          <delightful-icon icon="arrow-back" next="arrow-forward" toggle-on="click">
             <paper-icon-button></paper-icon-button>
           </delightful-icon>
         </template>
@@ -39,7 +39,7 @@
       <h3>Content</h3>
       <demo-snippet>
         <template>
-          <delightful-icon icon="add" next="create">
+          <delightful-icon icon="add" next="create" toggle-on="click">
             <paper-icon-button></paper-icon-button>
           </delightful-icon>
         </template>
@@ -48,19 +48,11 @@
       <h3>AV Icons</h3>
       <demo-snippet>
         <template>
-          <delightful-icon icon="play-arrow" next="pause">
+          <delightful-icon icon="play-arrow" next="pause" toggle-on="click">
             <paper-icon-button></paper-icon-button>
           </delightful-icon>
         </template>
       </demo-snippet>
-
-      <script>
-        window.addEventListener('WebComponentsReady', () => {
-          Array.from(document.querySelectorAll('delightful-icon')).forEach(function(icon) {
-            icon.addEventListener('click', icon.toggle.bind(icon));
-          });
-        });
-      </script>
     </div>
   </body>
 </html>
