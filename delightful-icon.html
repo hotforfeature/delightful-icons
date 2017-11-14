@@ -48,56 +48,94 @@ SOFTWARE.
       static get is() { return 'delightful-icon'; }
       static get properties() {
         return {
+          /**
+           * The current icon name. Refer to https://material.io/icons/ for icon names. Changing
+           * this property will trigger a transition.
+           */
           icon: {
             type: String,
             notify: true,
             reflectToAttribute: true,
             observer: 'iconChanged'
           },
+          /**
+           * The next icon name to transition to when toggling.
+           */
           next: {
             type: String,
             notify: true,
             reflectToAttribute: true,
             observer: 'nextChanged'
           },
+          /**
+           * Optional event name to listen to on the wrapped icon element. When this event fires,
+           * the icon will toggle, provided next is set.
+           */
           toggleOn: {
             type: String,
             observer: 'toggleOnChanged'
           },
+          /**
+           * CSS query to locate the wrapped icon element.
+           */
           query: {
             type: String,
             value: '*'
           },
+          /**
+           * The property name to set on the wrapped icon element. This property should consume an
+           * <iron-iconset-svg> icon name.
+           */
           property: {
             type: String,
             value: 'icon'
           },
+          /**
+           * Disables icon transitions.
+           */
           disableTransition: {
             type: Boolean,
             value: false,
             reflectToAttribute: true
           },
+          /**
+           * Disables the next icon transition. This will be true when the icon is first set to
+           * prevent transitions when the icon loads.
+           */
           disableNextTransition: {
             type: Boolean,
             value: true
           },
+          /**
+           * The wrapped icon element. This element should expose a property that consumes an
+           * <iron-iconset-svg> icon name.
+           */
           iconElement: {
             type: Object,
             computed: 'getIconElement(query)',
             observer: 'iconElementChanged'
           },
+          /**
+           * IronMeta instance used to retrieve iconset values.
+           */
           _meta: {
             type: Object,
             value: () => {
               return new Polymer.IronMeta({ type: 'iconset' });
             }
           },
+          /**
+           * Cached array of the current iconset's fully qualified icon names.
+           */
           _icons: {
             type: Array,
             value: () => {
               return [];
             }
           },
+          /**
+           * Cached array of the current iconset's abbreviated icon names.
+           */
           _iconNames: {
             type: Array,
             value: () => {
@@ -112,14 +150,30 @@ SOFTWARE.
         this._toggleOnListener = this.toggle.bind(this);
       }
 
+      /**
+       * Toggles between the current icon and the next icon.
+       */
       toggle() {
-        this.icon = this.next;
+        if (this.next) {
+          this.icon = this.next;
+        }
       }
 
+      /**
+       * Retrieves the wrapped icon element.
+       *
+       * @return {HTMLElement=} The wrapped icon element.
+       */
       getIconElement() {
         return this.querySelector(this.query || '*');
       }
 
+      /**
+       * Triggers a transition to the provided icon from a previous icon.
+       *
+       * @param {string=} icon - The icon to transition to.
+       * @param {string=} previous - Optional icon transitioning from.
+       */
       iconChanged(icon, previous) {
         let fullIcon = this._icons[this._iconNames.indexOf(icon)];
         if (!fullIcon) {
@@ -150,12 +204,26 @@ SOFTWARE.
         }
       }
 
+      /**
+       * Triggered when the next icon changes. When the icon is toggled, the icon is set to next and
+       * next is set to the previous icon.
+       *
+       * @param {string=} next - The current next icon.
+       * @param {string=} previous - The previous value of the next icon.
+       */
       nextChanged(next, previous) {
         if (next === this.icon) {
           this.icon = previous;
         }
       }
 
+      /**
+       * Triggered when toggleOn changes. It will remove the previous event name's listener and add
+       * a new listener to the wrapped icon element.
+       *
+       * @param {string=} toggleOn - The event name to toggle on.
+       * @param {string=} previous - The previous event name.
+       */
       toggleOnChanged(toggleOn, previous) {
         if (previous && this.iconElement) {
           this.iconElement.removeEventListener(previous, this._toggleOnListener);
@@ -166,6 +234,13 @@ SOFTWARE.
         }
       }
 
+      /**
+       * Triggered when iconElement changes. This will remove any toggleOn listeners and ensure
+       * listeners are added to the new element.
+       *
+       * @param {HTMLElement=} element - The current wrapped icon element.
+       * @param {HTMLElement=} previous - The previous wrapped icon element.
+       */
       iconElementChanged(element, previous) {
         if (previous && this.toggleOn) {
           previous.removeEventListener(this.toggleOn, this._toggleOnListener);
@@ -173,6 +248,12 @@ SOFTWARE.
         }
       }
 
+      /**
+       * Converts a CSS transition-duration property to milliseconds.
+       *
+       * @param {string} duration - CSS duration property.
+       * @return {number} The number of milliseconds equal to the duration.
+       */
       durationToMs(duration) {
         let value = parseFloat(duration);
         if (typeof duration === 'string' && duration.indexOf('ms') === -1) {
@@ -186,6 +267,16 @@ SOFTWARE.
         return value;
       }
 
+      /**
+       * Searches for and updates the iconset transition currently used based on the provided
+       * new icon and previous icon.
+       *
+       * If an iconset cannot be found from the provided icons, a console warning will be generated.
+       *
+       * @param {string=} newIcon - The icon to transition to.
+       * @param {string=} previousIcon - The icon to transition from.
+       * @return {boolean} True if an iconset was found, or false if an iconset could not be found.
+       */
       updatePairFor(newIcon, previousIcon) {
         let iconset;
         if (newIcon && newIcon.indexOf(':') > -1) {
@@ -229,6 +320,14 @@ SOFTWARE.
         return !!this._meta.value;
       }
 
+      /**
+       * Retrieves the abbreviated icon name of a fully qualified icon name.
+       *
+       * Ex: "av:play-arrow" -> "play-arrow"
+       *
+       * @param {string=} icon - The abbreviated or fully qualified icon name.
+       * @return {string=} The abbreviated icon name.
+       */
       getIconName(icon) {
         if (icon && icon.indexOf(':') > -1) {
           return icon.split(':')[1];
