@@ -61,6 +61,8 @@ There are two ways to trigger a transition:
 
 `<delightful-icon>` can listen to a default event from its wrapped element to toggle on by setting the `toggle-on` attribute to the event name.
 
+#### Wrapped element
+
 By default, `<delightful-icon>` will use its first child as the wrapped element and set the `icon` property. This can be customized further with `query` and `property` attributes.
 
 ```html
@@ -72,6 +74,8 @@ By default, `<delightful-icon>` will use its first child as the wrapped element 
   </div>
 </delightful-icon>
 ```
+
+#### Multi-icon transitions
 
 You can transition between several icons, provided each icon transitioned to has an imported animation for the icon it is transitioning from.
 
