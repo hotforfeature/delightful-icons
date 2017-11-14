@@ -7,29 +7,23 @@ _[Demo and API docs](https://www.webcomponents.org/element/hotforfeature/delight
 
 Material Design: [Creative Customization](https://material.io/guidelines/motion/creative-customization.html#creative-customization-icons)
 
-`delightful-icons` is a series of icon sets. Each icon set is a pair of icons that can transition from one to another with an animation. These animations are part of Material Design's delightful details.
+`delightful-icons` is a collection of icon sets and a helper `<delightful-icon>` element to assist transitioning between them. Each icon set is a pair of icons that can transition from one to another with an animation. These animations are part of Material Design's delightful details.
 
-### Install
+### &lt;delightful-icon&gt;
 
-```
-bower install --save delightful-icons
-```
-
-### Usage
-
-Each animation is defined as a separate icon set. Import the icon sets you want to use, or import all of them.
+`<delightful-icon>` is a helper element that wraps any element that uses an `<iron-icon>`. You can use it to define which icons to transition to.
 
 ```html
-<!-- Individually import transitions -->
+<!-- Import transitions individually -->
 <link rel="import" href="./bower_components/delightful-icons/icons/menu-arrow-back.html">
+<link rel="import" href="./bower_components/delightful-icons/icons/menu-arrow-forward.html">
 
-<!-- Or all transitions! -->
-<link rel="import" href="./bower_components/delightful-icons/all.html">
+<!-- Or all transitions -->
+<link rel="import" href="./bower_components/delightful-icons/icons/all.html">
+
+<!-- Import transitions before <delightful-icon> element -->
+<link rel="import" href="./bower_components/delightful-icons/delightful-icon.html">
 ```
-
-Icon sets are defined by a pair of icons that transition between each other. The icon set name is <code>delightful-<em>icon-pair</em></code> and the icon name is the icon of the pair you wish to display.
-
-To transition to another icon, change the icon name to the other value in the pair.
 
 <!---
 ```
@@ -40,63 +34,82 @@ To transition to another icon, change the icon name to the other value in the pa
     <link rel="import" href="icons/add-create.html">
     <link rel="import" href="icons/menu-arrow-back.html">
     <link rel="import" href="icons/play-arrow-pause.html">
+    <link rel="import" href="delightful-icon.html">
     <next-code-block></next-code-block>
-
-    <paper-icon-button icon="delightful-play-arrow-pause:play-arrow"></paper-icon-button>
-    <paper-icon-button icon="delightful-add-create:add"></paper-icon-button>
-
-    <script>
-      var TOGGLE_MAP = {
-        'delightful-add-create': ['add', 'create'],
-        'delightful-play-arrow-pause': ['play-arrow', 'pause']
-      };
-
-      document.addEventListener('WebComponentsReady', function() {
-        var buttons = document.querySelectorAll('paper-icon-button');
-        for (let i = 0; i < buttons.length; i++) {
-          buttons[i].addEventListener('click', function(e) {
-            var parts = e.target.icon.split(':');
-            var options = TOGGLE_MAP[parts[0]];
-            if (options) {
-              if (parts[1] === options[0]) {
-                parts[1] = options[1];
-              } else {
-                parts[1] = options[0]
-              }
-
-              e.target.icon = parts.join(':');
-            }
-          });
-        }
-      });
-    </script>
   </template>
 </custom-element-demo>
 ```
 -->
 ```html
-<paper-icon-button id="button" icon="delightful-menu-arrow-back:menu"></paper-icon-button>
+<delightful-icon icon="menu" next="arrow-back" toggle-on="click">
+  <paper-icon-button></paper-icon-button>
+</delightful-icon>
+
+<delightful-icon icon="play-arrow" next="pause" toggle-on="click">
+  <paper-icon-button></paper-icon-button>
+</delightful-icon>
+
+<delightful-icon icon="add" next="create" toggle-on="click">
+  <paper-icon-button></paper-icon-button>
+</delightful-icon>
+```
+
+There are two ways to trigger a transition:
+
+1. Change the `icon` property
+2. Set the `next` property and invoke `toggle()`
+
+`<delightful-icon>` can listen to a default event from its wrapped element to toggle on by setting the `toggle-on` attribute to the event name.
+
+By default, `<delightful-icon>` will use its first child as the wrapped element and set the `icon` property. This can be customized further with `query` and `property` attributes.
+
+```html
+<delightful-icon icon="menu" next="arrow-back" toggle-on="click"
+    query=".use-this" property="displayIcon">
+  <div>
+    <!-- <delightful-icon> will set the displayIcon property of this element -->
+    <my-custom-element class="use-this"></my-custom-element>
+  </div>
+</delightful-icon>
+```
+
+You can transition between several icons, provided each icon transitioned to has an imported animation for the icon it is transitioning from.
+
+<!---
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../paper-icon-button/paper-icon-button.html">
+    <link rel="import" href="icons/menu-arrow-back.html">
+    <link rel="import" href="icons/menu-arrow-forward.html">
+    <link rel="import" href="icons/arrow-back-arrow-forward.html">
+    <link rel="import" href="delightful-icon.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<!-- This button will transition between menu, arrow-back, and arrow-forward -->
+<delightful-icon id="menu-arrows" icon="menu">
+  <paper-icon-button></paper-icon-button>
+</delightful-icon>
 
 <script>
-  window.addEventListener('WebComponentsReady', function() {
-    var button = document.querySelector('#button');
-    button.addEventListener('click', function() {
-      if (button.icon.indexOf(':menu') > -1) {
-        button.icon = button.icon.replace(':menu', ':arrow-back');
-      } else {
-        button.icon = button.icon.replace(':arrow-back', ':menu');
-      }
-    });
+window.addEventListener('WebComponentsReady', function() {
+  var delight = document.querySelector('#menu-arrows');
+  delight.iconElement.addEventListener('click', function() {
+    if (delight.icon === 'menu') {
+      delight.icon = 'arrow-back';
+    } else if (delight.icon === 'arrow-back') {
+      delight.icon = 'arrow-forward';
+    } else {
+      delight.icon = 'menu';
+    }
   });
+});
 </script>
-```
-
-You can transition from one pair of icons to another, provided the icon you're transitioning to is the opposite icon of the current pair.
-
-```
-   delightful-menu-arrow-back:arrow-back
--> delightful-menu-arrow-back:menu
--> delightful-menu-arrow-forward:arrow-forward
 ```
 
 ### Styling
@@ -110,7 +123,7 @@ Custom Property               | Description         | Default
 
 ### Compatibility
 
-On browsers that do not support CSS transforms, the icon will immediately change from one to another without a transition .
+On browsers that do not support CSS transforms, the icon will immediately change from one to another without a transition.
 
 - **IE 11** does not support CSS transforms on SVG elements.
 - [**Microsoft Edge** is considering CSS transforms for SVG](https://developer.microsoft.com/en-us/microsoft-edge/platform/status/supportcsstransformsonsvg/).
