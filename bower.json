@@ -10,7 +10,7 @@
     "icon",
     "material"
   ],
-  "main": "all.html",
+  "main": "delightful-icon.html",
   "repository": {
     "type": "git",
     "url": "git://github.com/hotforfeature/delightful-icons"

@@ -25,6 +25,27 @@ SOFTWARE.
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../iron-meta/iron-meta.html">
 
+<!--
+`<delightful-icon>` is a helper element that wraps any element that uses an `<iron-icon>`. You can
+use it to define which icons to transition to.
+
+Example:
+
+    <delightful-icon icon="menu" next="arrow-back" toggle-on="click">
+      <paper-icon-button></paper-icon-button>
+    </delightful-icon>
+
+### Styling
+
+The following custom properties are available for styling:
+
+Custom Property               | Description         | Default
+------------------------------|---------------------|----------
+`--delightful-icons-duration` | Transition duration | `0.2s`
+`--delightful-icons-easing`   | Transition easing   | `cubic-bezier(0.4, 0, 0.2, 1)`
+
+@demo demo/index.html
+-->
 <dom-module id="delightful-icon">
   <template>
     <style>
