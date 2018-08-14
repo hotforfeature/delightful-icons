@@ -8,7 +8,7 @@
     "icon",
     "material"
   ],
-  "main": "all.html",
+  "main": "icons/all.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hotforfeature/delightful-icons.git"
@@ -19,22 +19,36 @@
   },
   "homepage": "https://github.com/hotforfeature/delightful-icons#readme",
   "scripts": {
-    "start": "polymer serve",
+    "start": "polymer serve --npm",
     "commitmsg": "validate-commit-msg",
     "commit": "git-cz",
     "release": "standard-version"
-  },
-  "devDependencies": {
-    "commitizen": "^2.9.6",
-    "cz-conventional-changelog": "^2.1.0",
-    "husky": "^0.14.3",
-    "polymer-cli": "^1.5.7",
-    "standard-version": "^4.2.0",
-    "validate-commit-msg": "^2.14.0"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "@polymer/iron-iconset-svg": "^3.0.0-pre.18",
+    "@polymer/polymer": "^3.0.0"
+  },
+  "devDependencies": {
+    "@polymer/iron-demo-helpers": "^3.0.0-pre.18",
+    "@polymer/paper-icon-button": "^3.0.0-pre.18",
+    "@webcomponents/webcomponentsjs": "^2.0.0",
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.1.0",
+    "husky": "^0.14.3",
+    "polymer-cli": "^1.7.7",
+    "standard-version": "^4.2.0",
+    "validate-commit-msg": "^2.14.0",
+    "wct-browser-legacy": "^1.0.1"
+  },
+  "resolutions": {
+    "inherits": "2.0.3",
+    "samsam": "1.1.3",
+    "supports-color": "3.1.2",
+    "type-detect": "1.0.0"
   }
 }

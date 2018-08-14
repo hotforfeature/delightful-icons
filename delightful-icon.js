@@ -1,0 +1,365 @@
+/**
+@license
+MIT License
+
+Copyright (c) 2017 Andrew Mitchell
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+/**
+`<delightful-icon>` is a helper element that wraps any element that uses an `<iron-icon>`. You can
+use it to define which icons to transition to.
+
+Example:
+
+    <delightful-icon icon="menu" next="arrow-back" toggle-on="click">
+      <paper-icon-button></paper-icon-button>
+    </delightful-icon>
+
+### Styling
+
+The following custom properties are available for styling:
+
+Custom Property               | Description         | Default
+------------------------------|---------------------|----------
+`--delightful-icons-duration` | Transition duration | `0.2s`
+`--delightful-icons-easing`   | Transition easing   | `cubic-bezier(0.4, 0, 0.2, 1)`
+
+@demo demo/index.html
+*/
+/*
+  FIXME(polymer-modulizer): the above comments were extracted
+  from HTML and may be out of place here. Review them and
+  then delete this comment!
+*/
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
+
+import { IronMeta } from '@polymer/iron-meta/iron-meta.js';
+/**
+ * `delightful-icon`
+ * Transition between icons using Material Design&#39;s delightful details.
+ *
+ * @customElement
+ * @polymer
+ */
+class DelightfulIcon extends PolymerElement {
+  static get template() {
+    return html`
+    <style>
+      :host([disable-transition]) {
+        --delightful-icons-duration: 1ms; /* Safari disables animations at 0s */
+      }
+    </style>
+    <slot></slot>
+`;
+  }
+
+  static get is() { return 'delightful-icon'; }
+  static get properties() {
+    return {
+      /**
+       * The current icon name. Refer to https://material.io/icons/ for icon names. Changing
+       * this property will trigger a transition.
+       */
+      icon: {
+        type: String,
+        notify: true,
+        reflectToAttribute: true,
+        observer: 'iconChanged'
+      },
+      /**
+       * The next icon name to transition to when toggling.
+       */
+      next: {
+        type: String,
+        notify: true,
+        reflectToAttribute: true,
+        observer: 'nextChanged'
+      },
+      /**
+       * Optional event name to listen to on the wrapped icon element. When this event fires,
+       * the icon will toggle, provided next is set.
+       */
+      toggleOn: {
+        type: String,
+        observer: 'toggleOnChanged'
+      },
+      /**
+       * CSS query to locate the wrapped icon element.
+       */
+      query: {
+        type: String,
+        value: '*'
+      },
+      /**
+       * The property name to set on the wrapped icon element. This property should consume an
+       * <iron-iconset-svg> icon name.
+       */
+      property: {
+        type: String,
+        value: 'icon'
+      },
+      /**
+       * Disables icon transitions.
+       */
+      disableTransition: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
+      },
+      /**
+       * Disables the next icon transition. This will be true when the icon is first set to
+       * prevent transitions when the icon loads.
+       */
+      disableNextTransition: {
+        type: Boolean,
+        value: true
+      },
+      /**
+       * The wrapped icon element. This element should expose a property that consumes an
+       * <iron-iconset-svg> icon name.
+       */
+      iconElement: {
+        type: Object,
+        computed: 'getIconElement(query)',
+        observer: 'iconElementChanged'
+      },
+      /**
+       * IronMeta instance used to retrieve iconset values.
+       */
+      _meta: {
+        type: Object,
+        value: () => {
+          return new IronMeta({ type: 'iconset' });
+        }
+      },
+      /**
+       * Cached array of the current iconset's fully qualified icon names.
+       */
+      _icons: {
+        type: Array,
+        value: () => {
+          return [];
+        }
+      },
+      /**
+       * Cached array of the current iconset's abbreviated icon names.
+       */
+      _iconNames: {
+        type: Array,
+        value: () => {
+          return [];
+        }
+      }
+    };
+  }
+
+  constructor() {
+    super();
+    this._toggleOnListener = this.toggle.bind(this);
+  }
+
+  /**
+   * Toggles between the current icon and the next icon.
+   */
+  toggle() {
+    if (this.next) {
+      this.icon = this.next;
+    }
+  }
+
+  /**
+   * Retrieves the wrapped icon element.
+   *
+   * @return {HTMLElement=} The wrapped icon element.
+   */
+  getIconElement() {
+    return this.querySelector(this.query || '*');
+  }
+
+  /**
+   * Triggers a transition to the provided icon from a previous icon.
+   *
+   * @param {string=} icon - The icon to transition to.
+   * @param {string=} previous - Optional icon transitioning from.
+   */
+  iconChanged(icon, previous) {
+    let fullIcon = this._icons[this._iconNames.indexOf(icon)];
+    if (!fullIcon) {
+      if (!this.updatePairFor(icon, previous || this.next)) {
+        this.disableNextTransition = true;
+        this.updatePairFor(icon);
+      }
+
+      if (this._iconNames.indexOf(icon) > -1) {
+        this.iconChanged(icon, previous);
+      }
+    } else if (this.iconElement && this.iconElement[this.property] !== fullIcon) {
+      let duration;
+      if (this.disableNextTransition) {
+        duration = this.iconElement.getComputedStyleValue('--delightful-icons-duration');
+        this._previousDisableTransition = this.disableTransition;
+        this.disableTransition = true;
+      }
+
+      this.iconElement[this.property] = fullIcon;
+      this.next = icon === this._iconNames[0] ? this._iconNames[1] : this._iconNames[0];
+      if (this.disableNextTransition) {
+        setTimeout(() => {
+          this.disableTransition = this._previousDisableTransition;
+          this.disableNextTransition = false;
+        }, this.durationToMs(duration));
+      }
+    }
+  }
+
+  /**
+   * Triggered when the next icon changes. When the icon is toggled, the icon is set to next and
+   * next is set to the previous icon.
+   *
+   * @param {string=} next - The current next icon.
+   * @param {string=} previous - The previous value of the next icon.
+   */
+  nextChanged(next, previous) {
+    if (next === this.icon) {
+      this.icon = previous;
+    }
+  }
+
+  /**
+   * Triggered when toggleOn changes. It will remove the previous event name's listener and add
+   * a new listener to the wrapped icon element.
+   *
+   * @param {string=} toggleOn - The event name to toggle on.
+   * @param {string=} previous - The previous event name.
+   */
+  toggleOnChanged(toggleOn, previous) {
+    if (previous && this.iconElement) {
+      this.iconElement.removeEventListener(previous, this._toggleOnListener);
+    }
+
+    if (toggleOn && this.iconElement) {
+      this.iconElement.addEventListener(toggleOn, this._toggleOnListener);
+    }
+  }
+
+  /**
+   * Triggered when iconElement changes. This will remove any toggleOn listeners and ensure
+   * listeners are added to the new element.
+   *
+   * @param {HTMLElement=} element - The current wrapped icon element.
+   * @param {HTMLElement=} previous - The previous wrapped icon element.
+   */
+  iconElementChanged(element, previous) {
+    if (previous && this.toggleOn) {
+      previous.removeEventListener(this.toggleOn, this._toggleOnListener);
+      this.toggleOnChanged(this.toggleOn);
+    }
+  }
+
+  /**
+   * Converts a CSS transition-duration property to milliseconds.
+   *
+   * @param {string} duration - CSS duration property.
+   * @return {number} The number of milliseconds equal to the duration.
+   */
+  durationToMs(duration) {
+    let value = parseFloat(duration);
+    if (typeof duration === 'string' && duration.indexOf('ms') === -1) {
+      value *= 1000;
+    }
+
+    if (isNaN(value)) {
+      value = 0;
+    }
+
+    return value;
+  }
+
+  /**
+   * Searches for and updates the iconset transition currently used based on the provided
+   * new icon and previous icon.
+   *
+   * If an iconset cannot be found from the provided icons, a console warning will be generated.
+   *
+   * @param {string=} newIcon - The icon to transition to.
+   * @param {string=} previousIcon - The icon to transition from.
+   * @return {boolean} True if an iconset was found, or false if an iconset could not be found.
+   */
+  updatePairFor(newIcon, previousIcon) {
+    let iconset;
+    if (newIcon && newIcon.indexOf(':') > -1) {
+      iconset = newIcon.split(':')[0];
+    }
+
+    if (!iconset) {
+      newIcon = this.getIconName(newIcon);
+      previousIcon = this.getIconName(previousIcon);
+      if (previousIcon) {
+        Object.keys(IronMeta.types.iconset || {}).some(key => {
+          if (previousIcon && (key === `delightful-${newIcon}-${previousIcon}` ||
+              key === `delightful-${previousIcon}-${newIcon}`)) {
+            iconset = key;
+            return true;
+          }
+        });
+      }
+
+      if (!iconset) {
+        Object.keys(IronMeta.types.iconset || {}).some(key => {
+          if (key.indexOf('delightful') === 0 && key.indexOf(newIcon) > -1) {
+            iconset = key;
+            return true;
+          }
+        });
+      }
+
+      if (!iconset) {
+        if (previousIcon) {
+          console.warn(`Missing icon pair for "${previousIcon}" and "${newIcon}"`);
+        } else {
+          console.warn(`Missing icon pair for "${newIcon}"`);
+        }
+      }
+    }
+
+    this._meta.key = iconset;
+    this._icons = this._meta.value && this._meta.value.getIconNames() || [];
+    this._iconNames = this._icons.map(fullIcon => this.getIconName(fullIcon));
+    return !!this._meta.value;
+  }
+
+  /**
+   * Retrieves the abbreviated icon name of a fully qualified icon name.
+   *
+   * Ex: "av:play-arrow" -> "play-arrow"
+   *
+   * @param {string=} icon - The abbreviated or fully qualified icon name.
+   * @return {string=} The abbreviated icon name.
+   */
+  getIconName(icon) {
+    if (icon && icon.indexOf(':') > -1) {
+      return icon.split(':')[1];
+    } else {
+      return icon;
+    }
+  }
+}
+
+window.customElements.define(DelightfulIcon.is, DelightfulIcon);
